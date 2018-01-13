@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AFF.DomainValidation</id>
+    <version>1.0.0</version>
+    <title>AFF.DomainValidation</title>
+    <authors>Asaph Fernandes</authors>
+    <owners>Asaph Fernandes</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/asaphfernandes</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple libery cross cutting to DDD.</description>
+    <releaseNotes>v1.0.0.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>Domain Validation Validate ValidationResult CrossCutting</tags>
+  </metadata>
+</package>
