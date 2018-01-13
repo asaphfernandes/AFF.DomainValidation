@@ -1,6 +1,6 @@
-﻿using AFF.DomainValidation.Entity;
+﻿using System;
+using AFF.DomainValidation.Entity;
 using AFF.DomainValidation.Interfaces;
-using System;
 
 namespace AFF.DomainValidation.Validations
 {
@@ -21,12 +21,17 @@ namespace AFF.DomainValidation.Validations
             _OBJ = obj;
         }
 
-        protected void AddIsValidate(string msg, Func<T, ValidationItem> fn)
+        protected void AddValidateItem(string msg, Func<T, ValidationItem> fn)
         {
             _ValidationResult.Itens.Add(fn(_OBJ));
         }
 
-        protected void AddIsSatisfiedBy(string msg, Func<T, EStatus> fn)
+        protected void AddValidateStatus(string msg, Func<T, EStatus> fn)
+        {
+            _ValidationResult.Itens.Add(new ValidationItem(msg, fn(_OBJ)));
+        }
+
+        protected void AddIsValid(string msg, Func<T, bool> fn)
         {
             _ValidationResult.Itens.Add(new ValidationItem(msg, fn(_OBJ)));
         }
@@ -43,8 +48,10 @@ namespace AFF.DomainValidation.Validations
 
         public ValidationBase(string message)
         {
-            _ValidationResult = new ValidationResult();
-            _ValidationResult.Message = message;
+            _ValidationResult = new ValidationResult
+            {
+                Message = message
+            };
         }
 
         public abstract ValidationResult Validate();

@@ -12,7 +12,7 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
 
         public override ValidationResult Validate()
         {
-            AddIsSatisfiedBy("Name must have 50 characters.", NameLenght);
+            AddValidateStatus("Name must have 50 characters.", NameLenght);
 
             return _ValidationResult;
         }
