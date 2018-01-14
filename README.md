@@ -10,5 +10,8 @@ When all messages are centralized in the class, that facilitates control of show
 
 Download the example project and see better the implementation of the Validation.
 
+## References
+- System
+
 ## Pre-requisites
 - .Net Framework 4.5 or more
