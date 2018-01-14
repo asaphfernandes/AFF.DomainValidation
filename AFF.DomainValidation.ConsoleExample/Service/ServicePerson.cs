@@ -1,22 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using AFF.DomainValidation.ConsoleExample.Entity;
 using AFF.DomainValidation.ConsoleExample.Validation;
+using AFF.DomainValidation.Entity;
 
 namespace AFF.DomainValidation.ConsoleExample.Service
 {
     class ServicePerson
     {
-        public void Add(Person entity)
+        public ServicePerson()
         {
-            var response = new ValidationPerson(entity).Validate();
+            _Persons = new List<Person>();
+        }
+
+        private List<Person> _Persons;
+
+        public List<Person> Get()
+        {
+            return _Persons;
+        }
+
+        public ValidationResult Add(Person entity)
+        {
+            var response = new ValidationPerson(entity, _Persons).Validate();
 
             if (response.IsValid)
-                Console.WriteLine("Person was inserted with success.");
-            else
-            {
-                foreach (var error in response.ItensError)
-                    Console.WriteLine(error.Message);
-            }
+                _Persons.Add(entity);
+
+            return response;
         }
     }
 }
