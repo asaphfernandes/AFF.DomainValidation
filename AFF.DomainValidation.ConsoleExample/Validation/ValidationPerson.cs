@@ -23,14 +23,7 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
             return _ValidationResult;
         }
 
-        private EStatus CodUnique(Person arg)
-        {
-            return _Persons.Any(w => w.Cod == arg.Cod) ? EStatus.ERROR : EStatus.SUCCESS;
-        }
-
-        private EStatus NameLenght(Person arg)
-        {
-            return arg.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
-        }
+        private EStatus CodUnique(Person arg) => _Persons.Any(w => w.Cod == arg.Cod).SuccessOrError(false);
+        private EStatus NameLenght(Person arg) => arg.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
     }
 }
