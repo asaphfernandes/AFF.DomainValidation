@@ -65,6 +65,9 @@
     <Compile Include="Validations\ValidationDateTime.cs" />
     <Compile Include="Validations\ValidationDecimal.cs" />
     <Compile Include="Validations\ValidationGuid.cs" />
+    <Compile Include="Validations\ValidationInt16.cs" />
+    <Compile Include="Validations\ValidationInt32.cs" />
+    <Compile Include="Validations\ValidationInt64.cs" />
     <Compile Include="Validations\ValidationString.cs" />
   </ItemGroup>
   <ItemGroup>
