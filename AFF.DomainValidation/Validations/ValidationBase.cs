@@ -4,56 +4,63 @@ using AFF.DomainValidation.Interfaces;
 
 namespace AFF.DomainValidation.Validations
 {
-    public abstract class ValidationBase<T> : ValidationBase
+    public abstract class ValidationBase<TEntity> : ValidationBase
     {
-        public delegate ValidationItem IsValidate(T entity);
-        public delegate ValidationItem IsValidates(T entity, params IValidation[] validation);
+        protected TEntity _Entity;
 
-        public delegate EStatus IsSatisfiedBys(T entity, params IValidation[] validation);
-        public delegate EStatus IsSatisfiedBy(T entity);
+        public ValidationBase(TEntity entity) : base() { _Entity = entity; }
 
-        protected T _OBJ;
-
-        public ValidationBase(T obj) : base() { _OBJ = obj; }
-
-        public ValidationBase(T obj, string message) : base(message)
+        public ValidationBase(TEntity entity, string message) : base(message)
         {
-            _OBJ = obj;
+            _Entity = entity;
         }
 
-        protected void AddValidateItem(string msg, Func<T, ValidationItem> fn)
+        protected void AddValidateItem(string msg, Func<TEntity, ValidationItem> fn)
         {
-            _ValidationResult.Itens.Add(fn(_OBJ));
+            ValidationResult.Itens.Add(fn(_Entity));
         }
 
-        protected void AddValidateStatus(string msg, Func<T, EStatus> fn)
+        protected void AddValidateStatus(string msg, Func<TEntity, EStatus> fn)
         {
-            _ValidationResult.Itens.Add(new ValidationItem(msg, fn(_OBJ)));
+            ValidationResult.Itens.Add(new ValidationItem(msg, fn(_Entity)));
         }
 
-        protected void AddIsValid(string msg, Func<T, bool> fn)
+        protected void AddIsValid(string msg, Func<TEntity, bool> fn)
         {
-            _ValidationResult.Itens.Add(new ValidationItem(msg, fn(_OBJ)));
+            ValidationResult.Itens.Add(new ValidationItem(msg, fn(_Entity)));
         }
     }
 
     public abstract class ValidationBase
     {
-        public ValidationResult _ValidationResult { get; protected set; }
+        public ValidationResult ValidationResult { get; protected set; }
 
         public ValidationBase()
         {
-            _ValidationResult = new ValidationResult();
+            ValidationResult = new ValidationResult();
         }
 
         public ValidationBase(string message)
         {
-            _ValidationResult = new ValidationResult
+            ValidationResult = new ValidationResult
             {
                 Message = message
             };
         }
 
-        public abstract ValidationResult Validate();
+        protected void AddValidateItem(string msg, Func<ValidationItem> fn)
+        {
+            ValidationResult.Itens.Add(fn());
+        }
+
+        protected void AddValidateStatus(string msg, Func<EStatus> fn)
+        {
+            ValidationResult.Itens.Add(new ValidationItem(msg, fn()));
+        }
+
+        protected void AddIsValid(string msg, Func<bool> fn)
+        {
+            ValidationResult.Itens.Add(new ValidationItem(msg, fn()));
+        }
     }
 }

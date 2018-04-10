@@ -15,12 +15,10 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
             _Persons = persons;
         }
 
-        public override ValidationResult Validate()
+        public void Validate()
         {
             AddValidateStatus("Cod must is unique.", CodUnique);
             AddValidateStatus("Name must have 50 characters.", NameLenght);
-
-            return _ValidationResult;
         }
 
         private EStatus CodUnique(Person arg) => _Persons.Any(w => w.Cod == arg.Cod).SuccessOrError(false);

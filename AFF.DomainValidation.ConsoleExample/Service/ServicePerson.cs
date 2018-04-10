@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AFF.DomainValidation.ConsoleExample.Entity;
 using AFF.DomainValidation.ConsoleExample.Validation;
 using AFF.DomainValidation.Entity;
@@ -22,12 +21,14 @@ namespace AFF.DomainValidation.ConsoleExample.Service
 
         public ValidationResult Add(Person entity)
         {
-            var response = new ValidationPerson(entity, _Persons).Validate();
+            var validation = new ValidationPerson(entity, _Persons);
 
-            if (response.IsValid)
+            validation.Validate();
+
+            if (validation.ValidationResult.IsValid)
                 _Persons.Add(entity);
 
-            return response;
+            return validation.ValidationResult;
         }
     }
 }
