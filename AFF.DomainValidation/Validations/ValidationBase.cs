@@ -17,17 +17,44 @@ namespace AFF.DomainValidation.Validations
 
         protected void AddValidateItem(string msg, Func<TEntity, ValidationItem> fn)
         {
-            ValidationResult.Itens.Add(fn(_Entity));
+            var result = fn(_Entity);
+            if (AddOnlyErrors)
+            {
+                if (result.Status == EStatus.ERROR)
+                    ValidationResult.Itens.Add(result);
+            }
+            else
+            {
+                ValidationResult.Itens.Add(result);
+            }
         }
 
         protected void AddValidateStatus(string msg, Func<TEntity, EStatus> fn)
         {
-            ValidationResult.Itens.Add(new ValidationItem(msg, fn(_Entity)));
+            var result = fn(_Entity);
+            if (AddOnlyErrors)
+            {
+                if (result == EStatus.ERROR)
+                    ValidationResult.Itens.Add(new ValidationItem(msg, result));
+            }
+            else
+            {
+                ValidationResult.Itens.Add(new ValidationItem(msg, result));
+            }
         }
 
         protected void AddIsValid(string msg, Func<TEntity, bool> fn)
         {
-            ValidationResult.Itens.Add(new ValidationItem(msg, fn(_Entity)));
+            var result = fn(_Entity);
+            if (AddOnlyErrors)
+            {
+                if (!result)
+                    ValidationResult.Itens.Add(new ValidationItem(msg, result));
+            }
+            else
+            {
+                ValidationResult.Itens.Add(new ValidationItem(msg, result));
+            }
         }
     }
 
@@ -47,6 +74,21 @@ namespace AFF.DomainValidation.Validations
                 Message = message
             };
         }
+
+        /// <summary>
+        /// Default false.
+        /// </summary>
+        public static bool AddOnlyErrors
+        {
+            get
+            {
+                if (_AddOnlyErrors.HasValue)
+                    return _AddOnlyErrors.Value;
+                return false;
+            }
+            protected set { _AddOnlyErrors = value; }
+        }
+        public static bool? _AddOnlyErrors;
 
         protected void AddValidateItem(string msg, Func<ValidationItem> fn)
         {

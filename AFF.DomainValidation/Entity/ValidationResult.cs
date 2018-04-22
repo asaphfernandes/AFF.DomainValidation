@@ -21,16 +21,11 @@ namespace AFF.DomainValidation.Entity
 
                 switch (Status)
                 {
-                    case EStatus.SUCCESS:
-                        return "Ação realizada com sucesso.";
-                    case EStatus.INFO:
-                        return "Informações adicionais.";
-                    case EStatus.ALERT:
-                        return "Ação necessida de sua confirmação.";
-                    case EStatus.WARNING:
-                        return "Ação executado, porém necessida de ajustes futuros.";
-                    case EStatus.ERROR:
-                        return "Ops! Ocorreu um erro.";
+                    case EStatus.SUCCESS: return Lang.SUCCESS;
+                    case EStatus.INFO: return Lang.INFO;
+                    case EStatus.ALERT: return Lang.ALERT;
+                    case EStatus.WARNING: return Lang.WARNING;
+                    case EStatus.ERROR: return Lang.ERROR;
                     default:
                         throw new ApplicationException("Condição o estado inespereado.");
                 }
@@ -67,24 +62,12 @@ namespace AFF.DomainValidation.Entity
 
                 switch (Status)
                 {
-                    case EStatus.SUCCESS:
-                        status = "success";
-                        break;
-                    case EStatus.INFO:
-                        status = "info";
-                        break;
-                    case EStatus.ALERT:
-                        status = "alert";
-                        break;
-                    case EStatus.WARNING:
-                        status = "warning";
-                        break;
-                    case EStatus.ERROR:
-                        status = "error";
-                        break;
-                    default:
-                        status = "error";
-                        break;
+                    case EStatus.SUCCESS: status = "success"; break;
+                    case EStatus.INFO: status = "info"; break;
+                    case EStatus.ALERT: status = "alert"; break;
+                    case EStatus.WARNING: status = "warning"; break;
+                    case EStatus.ERROR: status = "error"; break;
+                    default: status = "error"; break;
                 }
                 return status;
             }

@@ -17,6 +17,7 @@ namespace AFF.DomainValidation.ConsoleExample.Service
         public List<Person> Get()
         {
             return _Persons;
+            
         }
 
         public ValidationResult Add(Person entity)
