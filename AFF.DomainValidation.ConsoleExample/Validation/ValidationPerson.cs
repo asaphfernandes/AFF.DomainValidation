@@ -17,11 +17,11 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
 
         public void Validate()
         {
-            AddValidateStatus("Cod must is unique.", CodUnique);
-            AddValidateStatus("Name must have 50 characters.", NameLenght);
+            AddStatus("Cod must is unique.", CodUnique);
+            AddStatus("Name must have 50 characters.", NameLenght);
         }
 
-        private EStatus CodUnique(Person arg) => _Persons.Any(w => w.Cod == arg.Cod).SuccessOrError(false);
-        private EStatus NameLenght(Person arg) => arg.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
+        private EStatus CodUnique(Person entity) => _Persons.Any(w => w.Cod == entity.Cod).SuccessOrError(false);
+        private EStatus NameLenght(Person entity) => entity.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
     }
 }

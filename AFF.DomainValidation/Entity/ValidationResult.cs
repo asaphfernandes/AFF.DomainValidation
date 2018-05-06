@@ -39,12 +39,22 @@ namespace AFF.DomainValidation.Entity
         {
             get
             {
-                if (Itens.Count == Itens.Count(c => c.Status == EStatus.SUCCESS))
-                    return EStatus.SUCCESS;
+                if (_Status.HasValue)
+                    return _Status.Value;
                 else
-                    return EStatus.ERROR;
+                {
+                    if (Itens.Count == Itens.Count(c => c.Status == EStatus.SUCCESS))
+                        return EStatus.SUCCESS;
+                    else
+                        return EStatus.ERROR;
+                }
+            }
+            set
+            {
+                _Status = value;
             }
         }
+        private EStatus? _Status;
 
         public bool IsValid { get { return Status == EStatus.SUCCESS; } }
 

@@ -1,71 +1,91 @@
 ﻿using System;
 using AFF.DomainValidation.Entity;
-using AFF.DomainValidation.Interfaces;
 
 namespace AFF.DomainValidation.Validations
 {
     public abstract class ValidationBase<TEntity> : ValidationBase
     {
+        protected delegate Result FuncEntity<in Entity, out Result>(Entity entity);
+        protected delegate Result FuncEntity<in Message, in Entity, out Result>(Message message, Entity entity);
+
         protected TEntity _Entity;
 
         public ValidationBase(TEntity entity) : base() { _Entity = entity; }
 
-        public ValidationBase(TEntity entity, string message) : base(message)
+        public ValidationBase(TEntity entity, string message) : base(message) { _Entity = entity; }
+
+        [Obsolete("Use the method: AddItem(string msg, Func<string, TEntity, ValidationItem> func).")]
+        protected void AddValidateItem(string msg, FuncEntity<TEntity, ValidationItem> func)
         {
-            _Entity = entity;
+            ValidationResult.Itens.Add(func(_Entity));
         }
 
-        protected void AddValidateItem(string msg, Func<TEntity, ValidationItem> fn)
+        protected void AddItem(string msg, FuncEntity<string, TEntity, ValidationItem> func)
         {
-            var result = fn(_Entity);
-            if (AddOnlyErrors)
-            {
-                if (result.Status == EStatus.ERROR)
-                    ValidationResult.Itens.Add(result);
-            }
-            else
-            {
-                ValidationResult.Itens.Add(result);
-            }
+            ValidationResult.Itens.Add(func(msg, _Entity));
         }
 
-        protected void AddValidateStatus(string msg, Func<TEntity, EStatus> fn)
+        [Obsolete("Use the method: AddStatus(string msg, Func<TEntity, EStatus> func).")]
+        protected void AddValidateStatus(string msg, FuncEntity<TEntity, EStatus> func)
         {
-            var result = fn(_Entity);
-            if (AddOnlyErrors)
-            {
-                if (result == EStatus.ERROR)
-                    ValidationResult.Itens.Add(new ValidationItem(msg, result));
-            }
-            else
-            {
-                ValidationResult.Itens.Add(new ValidationItem(msg, result));
-            }
+            ValidationResult.Itens.Add(msg, func(_Entity));
         }
 
-        protected void AddIsValid(string msg, Func<TEntity, bool> fn)
+        protected void AddStatus(string msg, FuncEntity<TEntity, EStatus> func)
         {
-            var result = fn(_Entity);
-            if (AddOnlyErrors)
-            {
-                if (!result)
-                    ValidationResult.Itens.Add(new ValidationItem(msg, result));
-            }
-            else
-            {
-                ValidationResult.Itens.Add(new ValidationItem(msg, result));
-            }
+            ValidationResult.Itens.Add(msg, func(_Entity));
+        }
+
+        [Obsolete("Use other methods.")]
+        protected void AddIsValid(string msg, FuncEntity<TEntity, bool> func)
+        {
+            ValidationResult.Itens.Add(msg, func(_Entity));
+        }
+
+        protected void AddSuccess(string msg, FuncEntity<TEntity, bool> func)
+        {
+            var result = func(_Entity);
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.SUCCESS);
+        }
+
+        protected void AddInfo(string msg, FuncEntity<TEntity, bool> func)
+        {
+            var result = func(_Entity);
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.INFO);
+        }
+
+        protected void AddAlert(string msg, FuncEntity<TEntity, bool> func)
+        {
+            var result = func(_Entity);
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.ALERT);
+        }
+
+        protected void AddWarning(string msg, FuncEntity<TEntity, bool> func)
+        {
+            var result = func(_Entity);
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.WARNING);
+        }
+
+        protected void AddError(string msg, FuncEntity<TEntity, bool> func)
+        {
+            var result = func(_Entity);
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.ERROR);
         }
     }
 
     public abstract class ValidationBase
     {
+        protected delegate Result Func<out Result>();
+        protected delegate Result Func<in Message, out Result>(Message message);
+
         public ValidationResult ValidationResult { get; protected set; }
 
-        public ValidationBase()
-        {
-            ValidationResult = new ValidationResult();
-        }
+        public ValidationBase() { ValidationResult = new ValidationResult(); }
 
         public ValidationBase(string message)
         {
@@ -75,34 +95,67 @@ namespace AFF.DomainValidation.Validations
             };
         }
 
-        /// <summary>
-        /// Default false.
-        /// </summary>
-        public static bool AddOnlyErrors
+        [Obsolete("Use the method: AddItem(string msg, Func<string, ValidationItem> func).")]
+        protected void AddValidateItem(string msg, Func<ValidationItem> func)
         {
-            get
-            {
-                if (_AddOnlyErrors.HasValue)
-                    return _AddOnlyErrors.Value;
-                return false;
-            }
-            protected set { _AddOnlyErrors = value; }
-        }
-        public static bool? _AddOnlyErrors;
-
-        protected void AddValidateItem(string msg, Func<ValidationItem> fn)
-        {
-            ValidationResult.Itens.Add(fn());
+            ValidationResult.Itens.Add(func());
         }
 
-        protected void AddValidateStatus(string msg, Func<EStatus> fn)
+        protected void AddItem(string msg, Func<string, ValidationItem> func)
         {
-            ValidationResult.Itens.Add(new ValidationItem(msg, fn()));
+            ValidationResult.Itens.Add(func(msg));
         }
 
-        protected void AddIsValid(string msg, Func<bool> fn)
+        [Obsolete("Use the method: AddStatus(string msg, Func<EStatus> func).")]
+        protected void AddValidateStatus(string msg, Func<EStatus> func)
         {
-            ValidationResult.Itens.Add(new ValidationItem(msg, fn()));
+            ValidationResult.Itens.Add(msg, func());
+        }
+
+        protected void AddStatus(string msg, Func<EStatus> func)
+        {
+            ValidationResult.Itens.Add(msg, func());
+        }
+
+        [Obsolete("Use other methods.")]
+        protected void AddIsValid(string msg, Func<bool> func)
+        {
+            ValidationResult.Itens.Add(msg, func());
+        }
+
+        protected void AddSuccess(string msg, Func<bool> func)
+        {
+            var result = func();
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.SUCCESS);
+        }
+
+        protected void AddInfo(string msg, Func<bool> func)
+        {
+            var result = func();
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.INFO);
+        }
+
+        protected void AddAlert(string msg, Func<bool> func)
+        {
+            var result = func();
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.ALERT);
+        }
+
+        protected void AddWarning(string msg, Func<bool> func)
+        {
+            var result = func();
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.WARNING);
+        }
+
+        protected void AddError(string msg, Func<bool> func)
+        {
+            var result = func();
+            if (result)
+                ValidationResult.Itens.Add(msg, EStatus.ERROR);
         }
     }
 }
