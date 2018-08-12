@@ -32,7 +32,7 @@ namespace AFF.DomainValidation.ConsoleExample
                 Console.WriteLine(" 1 - Person");
                 Console.WriteLine(" 9 - Exit");
                 Console.Write(" Option: ");
-                menuOption = GetInt32();
+                menuOption = GetInt32(0).Value;
                 if (menuOption == 1)
                     MenuPerson();
                 else if (menuOption == 9)
@@ -54,7 +54,7 @@ namespace AFF.DomainValidation.ConsoleExample
                 Console.WriteLine(" 8 - Back");
                 Console.WriteLine(" 9 - Exit");
                 Console.Write(" Option: ");
-                menuOption = GetInt32();
+                menuOption = GetInt32(0).Value;
                 if (menuOption == 1)
                     CreatePerson();
                 if (menuOption == 2)
@@ -110,7 +110,7 @@ namespace AFF.DomainValidation.ConsoleExample
             Console.Read();
         }
 
-        private static int GetInt32(int _default = 0)
+        private static int? GetInt32(int? _default = null)
         {
             var read = Console.ReadLine();
             try

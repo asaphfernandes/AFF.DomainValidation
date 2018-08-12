@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using AFF.DomainValidation.Entity;
 
 namespace AFF.DomainValidation.Validations
@@ -10,7 +12,12 @@ namespace AFF.DomainValidation.Validations
 
         protected TEntity _Entity;
 
-        public ValidationBase(TEntity entity) : base() { _Entity = entity; }
+        public ValidationBase(TEntity entity) : base()
+        {
+            _Entity = entity;
+            ValidateAttribute();
+
+        }
 
         public ValidationBase(TEntity entity, string message) : base(message) { _Entity = entity; }
 
@@ -75,6 +82,37 @@ namespace AFF.DomainValidation.Validations
             var result = func(_Entity);
             if (result)
                 ValidationResult.Itens.Add(msg, EStatus.ERROR);
+        }
+
+        private void ValidateAttribute()
+        {
+            var properties = _Entity.GetType().GetProperties();
+
+            foreach (var property in properties)
+            {
+                var customAttributes = property.GetCustomAttributes<System.ComponentModel.DataAnnotations.ValidationAttribute>();
+                if (customAttributes.Any())
+                {
+                    var context = new System.ComponentModel.DataAnnotations.ValidationContext(property);
+
+                    var displayAttribute = property.GetCustomAttributes<System.ComponentModel.DataAnnotations.DisplayAttribute>().SingleOrDefault();
+
+                    if (displayAttribute != null)
+                        context.DisplayName = displayAttribute.Name;
+                    else
+                        context.DisplayName = property.Name;
+
+                    foreach (var customAttribute in customAttributes)
+                    {
+                        var value = property.GetValue(_Entity);
+                        if (!customAttribute.IsValid(value))
+                        {
+                            var result = customAttribute.GetValidationResult(value, context);
+                            ValidationResult.Itens.Add(result.ErrorMessage, false);
+                        }
+                    }
+                }
+            }
         }
     }
 
