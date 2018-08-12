@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace AFF.DomainValidation.Entity
@@ -26,8 +25,7 @@ namespace AFF.DomainValidation.Entity
                     case EStatus.ALERT: return Lang.ALERT;
                     case EStatus.WARNING: return Lang.WARNING;
                     case EStatus.ERROR: return Lang.ERROR;
-                    default:
-                        throw new ApplicationException("Condição o estado inespereado.");
+                    default: return null;
                 }
             }
             set { _Message = value; }
