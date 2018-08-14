@@ -20,7 +20,7 @@ namespace AFF.DomainValidation.ConsoleExample.Service
             
         }
 
-        public ValidationResult Add(Person entity)
+        public ValidationResponse Add(Person entity)
         {
             var validation = new ValidationPerson(entity, _Persons);
 

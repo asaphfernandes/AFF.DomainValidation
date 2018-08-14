@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AFF.DomainValidation.DataAnnotations;
 
 namespace AFF.DomainValidation.ConsoleExample.Entity
 {
@@ -10,5 +11,7 @@ namespace AFF.DomainValidation.ConsoleExample.Entity
         public string Name { get; set; }
         [Display(Name = "Idade"), Required]
         public int? Age { get; set; }
+        [Display(Name = "CPF"), Required, Cpf]
+        public string Cpf { get; set; }
     }
 }

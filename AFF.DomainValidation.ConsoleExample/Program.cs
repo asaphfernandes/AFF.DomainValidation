@@ -76,12 +76,15 @@ namespace AFF.DomainValidation.ConsoleExample
             var name = Console.ReadLine();
             Console.Write(" Age: ");
             var age = GetInt32();
+            Console.Write(" CPF: ");
+            var cpf = Console.ReadLine();
 
             var person = new Person()
             {
                 Cod = cod,
                 Name = name,
-                Age = age
+                Age = age,
+                Cpf = cpf
             };
 
             var response = _ServicePerson.Add(person);
@@ -123,7 +126,7 @@ namespace AFF.DomainValidation.ConsoleExample
             }
         }
 
-        private static void DisplayMessage(ValidationResult response)
+        private static void DisplayMessage(ValidationResponse response)
         {
             ConfigMessage(response.Status, response.Message);
 

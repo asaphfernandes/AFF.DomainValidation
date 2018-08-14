@@ -121,13 +121,13 @@ namespace AFF.DomainValidation.Validations
         protected delegate Result Func<out Result>();
         protected delegate Result Func<in Message, out Result>(Message message);
 
-        public ValidationResult ValidationResult { get; protected set; }
+        public ValidationResponse ValidationResult { get; protected set; }
 
-        public ValidationBase() { ValidationResult = new ValidationResult(); }
+        public ValidationBase() { ValidationResult = new ValidationResponse(); }
 
         public ValidationBase(string message)
         {
-            ValidationResult = new ValidationResult
+            ValidationResult = new ValidationResponse
             {
                 Message = message
             };

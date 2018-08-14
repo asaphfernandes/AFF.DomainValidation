@@ -56,9 +56,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAnnotations\CpfAttribute.cs" />
     <Compile Include="Entity\Enums.cs" />
     <Compile Include="Entity\ValidationItem.cs" />
-    <Compile Include="Entity\ValidationResult.cs" />
+    <Compile Include="Entity\ValidationResponse.cs" />
     <Compile Include="Interfaces\IValidation.cs" />
     <Compile Include="Entity\Lang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

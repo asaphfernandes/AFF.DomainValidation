@@ -3,26 +3,11 @@ using System.Linq;
 
 namespace AFF.DomainValidation.Entity
 {
-    public class ValidationResult : System.ComponentModel.DataAnnotations.ValidationResult
+    public class ValidationResponse
     {
-        public ValidationResult() : base(errorMessage : null)
+        public ValidationResponse()
         {
             Itens = new HashSet<ValidationItem>();
-        }
-
-        public ValidationResult(string errorMessage) : base(errorMessage)
-        {
-
-        }
-
-        public ValidationResult(string errorMessage, IEnumerable<string> memberNames) : base(errorMessage, memberNames)
-        {
-
-        }
-
-        protected ValidationResult(ValidationResult validationResult) : base(validationResult)
-        {
-
         }
 
         private string _Message = null;
