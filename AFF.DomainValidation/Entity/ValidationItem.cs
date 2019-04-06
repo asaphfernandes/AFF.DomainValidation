@@ -20,7 +20,7 @@ namespace AFF.DomainValidation.Entity
         public EStatus Status { get; private set; }
     }
 
-    public static class ValidationItemExtension
+    internal static class ValidationItemExtension
     {
         public static ICollection<ValidationItem> Add(this ICollection<ValidationItem> list, string msg, EStatus status)
         {
@@ -31,6 +31,13 @@ namespace AFF.DomainValidation.Entity
         public static ICollection<ValidationItem> Add(this ICollection<ValidationItem> list, string msg, bool isValid)
         {
             list.Add(new ValidationItem(msg, isValid));
+            return list;
+        }
+
+        public static ICollection<ValidationItem> Add(this ICollection<ValidationItem> list, Rule rule)
+        {
+            if (rule.EStatus.HasValue)
+                list.Add(new ValidationItem(rule.Message, rule.EStatus.Value));
             return list;
         }
     }

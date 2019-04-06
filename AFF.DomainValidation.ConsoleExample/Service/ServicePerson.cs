@@ -5,7 +5,7 @@ using AFF.DomainValidation.Entity;
 
 namespace AFF.DomainValidation.ConsoleExample.Service
 {
-    class ServicePerson
+    internal class ServicePerson
     {
         public ServicePerson()
         {
@@ -17,7 +17,6 @@ namespace AFF.DomainValidation.ConsoleExample.Service
         public List<Person> Get()
         {
             return _Persons;
-            
         }
 
         public ValidationResponse Add(Person entity)

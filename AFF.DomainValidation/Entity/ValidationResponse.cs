@@ -41,10 +41,13 @@ namespace AFF.DomainValidation.Entity
                     return _Status.Value;
                 else
                 {
-                    if (Itens.Count == Itens.Count(c => c.Status == EStatus.SUCCESS))
-                        return EStatus.SUCCESS;
-                    else
-                        return EStatus.ERROR;
+                    var status = Itens.GroupBy(g => g.Status)
+                        .OrderByDescending(s => s.Key)
+                        .Select(s => s.Key)
+                        .DefaultIfEmpty(EStatus.SUCCESS)
+                        .FirstOrDefault();
+
+                    return status;
                 }
             }
             set

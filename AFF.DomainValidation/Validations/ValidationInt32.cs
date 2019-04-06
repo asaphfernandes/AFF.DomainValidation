@@ -1,4 +1,6 @@
-﻿namespace AFF.DomainValidation.Validations
+﻿using AFF.DomainValidation.Entity;
+
+namespace AFF.DomainValidation.Validations
 {
     public static class ValidationInt32
     {
@@ -16,5 +18,61 @@
 
         public static bool Between(this int value, int min, int max) => value >= min && value <= max;
         public static bool Between(this int? value, int min, int max) => value.HasValue ? value >= min && value <= max : true;
+
+
+        public static Rule<int> IsLess(this Rule<int> rule, int max)
+        {
+            rule.IsValid = rule.Value.IsLess(max);
+            return rule;
+        }
+        public static Rule<int?> IsLess(this Rule<int?> rule, int max)
+        {
+            rule.IsValid = rule.Value.IsLess(max);
+            return rule;
+        }
+
+        public static Rule<int> IsLessOrEqual(this Rule<int> rule, int max)
+        {
+            rule.IsValid = rule.Value.IsLessOrEqual(max);
+            return rule;
+        }
+        public static Rule<int?> IsLessOrEqual(this Rule<int?> rule, int max)
+        {
+            rule.IsValid = rule.Value.IsLessOrEqual(max);
+            return rule;
+        }
+
+        public static Rule<int> IsGreater(this Rule<int> rule, int min)
+        {
+            rule.IsValid = rule.Value.IsGreater(min);
+            return rule;
+        }
+        public static Rule<int?> IsGreater(this Rule<int?> rule, int min)
+        {
+            rule.IsValid = rule.Value.IsGreater(min);
+            return rule;
+        }
+
+        public static Rule<int> IsGreaterOrEqual(this Rule<int> rule, int min)
+        {
+            rule.IsValid = rule.Value.IsGreaterOrEqual(min);
+            return rule;
+        }
+        public static Rule<int?> IsGreaterOrEqual(this Rule<int?> rule, int min)
+        {
+            rule.IsValid = rule.Value.IsGreaterOrEqual(min);
+            return rule;
+        }
+
+        public static Rule<int> Between(this Rule<int> rule, int min, int max)
+        {
+            rule.IsValid = rule.Value.Between(min, max);
+            return rule;
+        }
+        public static Rule<int?> Between(this Rule<int?> rule, int min, int max)
+        {
+            rule.IsValid = rule.Value.Between(min, max);
+            return rule;
+        }
     }
 }

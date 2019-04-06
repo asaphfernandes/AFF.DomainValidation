@@ -15,6 +15,11 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
             _Persons = persons;
         }
 
+        protected override void AddRules()
+        {
+            RuleFor(c => c.Age).IsGreaterOrEqual(18).Validate("Min age is 18 years old");
+        }
+
         public void Validate()
         {
             AddStatus("Cod must is unique.", CodUnique);

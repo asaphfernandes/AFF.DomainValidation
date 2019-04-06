@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="DataAnnotations\CpfAttribute.cs" />
     <Compile Include="Entity\Enums.cs" />
+    <Compile Include="Entity\Rule.cs" />
     <Compile Include="Entity\ValidationItem.cs" />
     <Compile Include="Entity\ValidationResponse.cs" />
     <Compile Include="Interfaces\IValidation.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Validations\ValidationBase.cs" />
     <Compile Include="Validations\ValidationBoolean.cs" />
     <Compile Include="Validations\ValidationDateTime.cs" />
+    <Compile Include="Validations\ValidationDouble.cs" />
     <Compile Include="Validations\ValidationDecimal.cs" />
     <Compile Include="Validations\ValidationGuid.cs" />
     <Compile Include="Validations\ValidationInt16.cs" />

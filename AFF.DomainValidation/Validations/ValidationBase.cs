@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AFF.DomainValidation.Entity;
@@ -10,16 +11,24 @@ namespace AFF.DomainValidation.Validations
         protected delegate Result FuncEntity<in Entity, out Result>(Entity entity);
         protected delegate Result FuncEntity<in Message, in Entity, out Result>(Message message, Entity entity);
 
-        protected TEntity _Entity;
+        private List<Rule> _rules { get; } = new List<Rule>();
+        protected TEntity _Entity { get; }
 
         public ValidationBase(TEntity entity) : base()
         {
             _Entity = entity;
+            AddRules();
             ValidateAttribute();
-
+            ValidadeRule();
         }
 
-        public ValidationBase(TEntity entity, string message) : base(message) { _Entity = entity; }
+        public ValidationBase(TEntity entity, string message) : base(message)
+        {
+            _Entity = entity;
+            AddRules();
+            ValidateAttribute();
+            ValidadeRule();
+        }
 
         [Obsolete("Use the method: AddItem(string msg, Func<string, TEntity, ValidationItem> func).")]
         protected void AddValidateItem(string msg, FuncEntity<TEntity, ValidationItem> func)
@@ -43,7 +52,6 @@ namespace AFF.DomainValidation.Validations
             ValidationResult.Itens.Add(msg, func(_Entity));
         }
 
-        [Obsolete("Use other methods.")]
         protected void AddIsValid(string msg, FuncEntity<TEntity, bool> func)
         {
             ValidationResult.Itens.Add(msg, func(_Entity));
@@ -84,6 +92,16 @@ namespace AFF.DomainValidation.Validations
                 ValidationResult.Itens.Add(msg, EStatus.ERROR);
         }
 
+        protected virtual void AddRules() { }
+
+        protected Rule<TKey> RuleFor<TKey>(Func<TEntity, TKey> keySelector)
+        {
+            var value = keySelector.Invoke(_Entity);
+            var rule = new Rule<TKey>(value);
+            _rules.Add(rule);
+            return rule;
+        }
+
         private void ValidateAttribute()
         {
             var properties = _Entity.GetType().GetProperties();
@@ -114,6 +132,12 @@ namespace AFF.DomainValidation.Validations
                 }
             }
         }
+
+        private void ValidadeRule()
+        {
+            foreach (var rule in _rules)
+                ValidationResult.Itens.Add(rule);
+        }
     }
 
     public abstract class ValidationBase
@@ -121,17 +145,10 @@ namespace AFF.DomainValidation.Validations
         protected delegate Result Func<out Result>();
         protected delegate Result Func<in Message, out Result>(Message message);
 
-        public ValidationResponse ValidationResult { get; protected set; }
+        public ValidationResponse ValidationResult { get; private set; }
 
-        public ValidationBase() { ValidationResult = new ValidationResponse(); }
-
-        public ValidationBase(string message)
-        {
-            ValidationResult = new ValidationResponse
-            {
-                Message = message
-            };
-        }
+        public ValidationBase() => ValidationResult = new ValidationResponse();
+        public ValidationBase(string message) => ValidationResult = new ValidationResponse { Message = message };
 
         [Obsolete("Use the method: AddItem(string msg, Func<string, ValidationItem> func).")]
         protected void AddValidateItem(string msg, Func<ValidationItem> func)
@@ -155,7 +172,6 @@ namespace AFF.DomainValidation.Validations
             ValidationResult.Itens.Add(msg, func());
         }
 
-        [Obsolete("Use other methods.")]
         protected void AddIsValid(string msg, Func<bool> func)
         {
             ValidationResult.Itens.Add(msg, func());
