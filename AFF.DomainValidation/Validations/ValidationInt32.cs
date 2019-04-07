@@ -61,6 +61,7 @@ namespace AFF.DomainValidation.Validations
         public static Rule<int?> IsGreaterOrEqual(this Rule<int?> rule, int min)
         {
             rule.IsValid = rule.Value.IsGreaterOrEqual(min);
+            rule.Message = string.Format(Langs.Resource.Validation_IsGreaterOrEqual, rule.Property, min, rule.Value);
             return rule;
         }
 

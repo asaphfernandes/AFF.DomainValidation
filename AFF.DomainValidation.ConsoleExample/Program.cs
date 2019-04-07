@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using AFF.DomainValidation.ConsoleExample.Entity;
 using AFF.DomainValidation.ConsoleExample.Service;
 using AFF.DomainValidation.Entity;
@@ -13,6 +15,7 @@ namespace AFF.DomainValidation.ConsoleExample
 
         static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
             Console.Title = "AFF.DomainValidation";
 
             _ServicePerson = new ServicePerson();

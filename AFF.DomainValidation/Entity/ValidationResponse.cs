@@ -20,11 +20,11 @@ namespace AFF.DomainValidation.Entity
 
                 switch (Status)
                 {
-                    case EStatus.SUCCESS: return Lang.SUCCESS;
-                    case EStatus.INFO: return Lang.INFO;
-                    case EStatus.ALERT: return Lang.ALERT;
-                    case EStatus.WARNING: return Lang.WARNING;
-                    case EStatus.ERROR: return Lang.ERROR;
+                    case EStatus.SUCCESS: return Langs.Resource.ValidationResponse_SUCCESS;
+                    case EStatus.INFO: return Langs.Resource.ValidationResponse_INFO;
+                    case EStatus.ALERT: return Langs.Resource.ValidationResponse_ALERT;
+                    case EStatus.WARNING: return Langs.Resource.ValidationResponse_WARNING;
+                    case EStatus.ERROR: return Langs.Resource.ValidationResponse_ERROR;
                     default: return null;
                 }
             }

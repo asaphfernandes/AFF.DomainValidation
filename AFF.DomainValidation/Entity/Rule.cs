@@ -2,7 +2,7 @@
 {
     public class Rule<TKey> : Rule
     {
-        public Rule(object value)
+        public Rule(string property, object value) : base(property)
         {
             Value = (TKey)value;
         }
@@ -12,6 +12,11 @@
 
     public class Rule
     {
+        public Rule(string property)
+        {
+            Property = property;
+        }
+
         public string Property { get; set; }
         public bool IsValid { get; internal set; }
         public EStatus? EStatus { get; internal set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using AFF.DomainValidation.Entity;
 
@@ -94,10 +95,17 @@ namespace AFF.DomainValidation.Validations
 
         protected virtual void AddRules() { }
 
-        protected Rule<TKey> RuleFor<TKey>(Func<TEntity, TKey> keySelector)
+        protected Rule<TKey> RuleFor<TKey>(Expression<Func<TEntity, TKey>> keySelector)
         {
-            var value = keySelector.Invoke(_Entity);
-            var rule = new Rule<TKey>(value);
+            var memberExpression = keySelector.Body as MemberExpression;
+            var property = memberExpression.Member.Name;
+            var value = keySelector.Compile().Invoke(_Entity);
+
+            var displayAttribute = _Entity.GetType().GetProperty(property).GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>();
+            if (displayAttribute != null)
+                property = displayAttribute.Name;
+
+            var rule = new Rule<TKey>(property, value);
             _rules.Add(rule);
             return rule;
         }

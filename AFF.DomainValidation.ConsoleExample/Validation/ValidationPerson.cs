@@ -17,7 +17,7 @@ namespace AFF.DomainValidation.ConsoleExample.Validation
 
         protected override void AddRules()
         {
-            RuleFor(c => c.Age).IsGreaterOrEqual(18).Validate("Min age is 18 years old");
+            RuleFor(c => c.Age).IsGreaterOrEqual(18).Validate();
         }
 
         public void Validate()
