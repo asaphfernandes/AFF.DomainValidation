@@ -17,85 +17,96 @@
             Property = property;
         }
 
-        public string Property { get; set; }
-        public bool IsValid { get; internal set; }
-        public EStatus? EStatus { get; internal set; }
-        public string Message { get; internal set; }
+        internal string Property { get; set; }
+        internal bool? IsValid { get; set; }
+        internal EStatus? EStatus { get; set; }
+        internal object[] Values { get; set; }
+
+        private string _message { get; set; }
+        public string Message
+        {
+            get
+            {
+                return string.Format(_message, Values);
+            }
+            internal set
+            {
+                _message = value;
+            }
+        }
 
         public void Validate()
         {
-            EStatus = IsValid ? Entity.EStatus.SUCCESS : Entity.EStatus.ERROR;
+            Validate(Entity.EStatus.SUCCESS, Entity.EStatus.ERROR);
         }
         public void Validate(string message)
         {
-            Validate();
-            Message = message;
+            Validate(message, Entity.EStatus.SUCCESS, Entity.EStatus.ERROR);
         }
 
-        public void Validate(EStatus status)
+        public void Validate(EStatus isValidStatus)
         {
-            if (IsValid)
-                EStatus = status;
+            Validate(isValidStatus, Entity.EStatus.ERROR);
         }
-        public void Validate(EStatus status, string message)
+        public void Validate(EStatus isValidStatus, EStatus? isNotValidStatus)
         {
-            Validate(status);
+            if (IsValid.HasValue)
+                EStatus = IsValid.Value ? isValidStatus : isNotValidStatus;
+        }
+
+        public void Validate(string message, EStatus isValidStatus)
+        {
+            Validate(message, isValidStatus, Entity.EStatus.ERROR);
+        }
+        public void Validate(string message, EStatus isValidStatus, EStatus? isNotValidStatus)
+        {
+            Validate(isValidStatus, isNotValidStatus);
             Message = message;
         }
 
         public void ValidateSuccess()
         {
-            if (IsValid)
-                EStatus = Entity.EStatus.SUCCESS;
+            Validate(Entity.EStatus.SUCCESS, null);
         }
         public void ValidateSuccess(string message)
         {
-            ValidateSuccess();
-            Message = message;
+            Validate(message, Entity.EStatus.SUCCESS, null);
         }
 
         public void ValidateInfo()
         {
-            if (IsValid)
-                EStatus = Entity.EStatus.INFO;
+            Validate(Entity.EStatus.INFO, null);
         }
         public void ValidateInfo(string message)
         {
-            ValidateInfo();
-            Message = message;
+            Validate(message, Entity.EStatus.INFO, null);
         }
 
         public void ValidateAlert()
         {
-            if (IsValid)
-                EStatus = Entity.EStatus.ALERT;
+            Validate(Entity.EStatus.ALERT, null);
         }
         public void ValidateAlert(string message)
         {
-            ValidateAlert();
-            Message = message;
+            Validate(message, Entity.EStatus.ALERT, null);
         }
 
         public void ValidateWarning()
         {
-            if (IsValid)
-                EStatus = Entity.EStatus.WARNING;
+            Validate(Entity.EStatus.WARNING, null);
         }
         public void ValidateWarning(string message)
         {
-            ValidateWarning();
-            Message = message;
+            Validate(message, Entity.EStatus.WARNING, null);
         }
 
         public void ValidateError()
         {
-            if (IsValid)
-                EStatus = Entity.EStatus.ERROR;
+            Validate(Entity.EStatus.ERROR, null);
         }
         public void ValidateError(string message)
         {
-            ValidateError();
-            Message = Message;
+            Validate(message, Entity.EStatus.ERROR, null);
         }
     }
 }
