@@ -23,39 +23,53 @@ namespace AFF.DomainValidation.Validations
         public static Rule<int> IsLess(this Rule<int> rule, int max)
         {
             rule.IsValid = rule.Value.IsLess(max);
+            rule.Message = Langs.Resource.Validation_IsLess;
+            rule.Values = new object[] { rule.Property, max, rule.Value };
             return rule;
         }
         public static Rule<int?> IsLess(this Rule<int?> rule, int max)
         {
             rule.IsValid = rule.Value.IsLess(max);
+            rule.Message = Langs.Resource.Validation_IsLess;
+            rule.Values = new object[] { rule.Property, max, rule.Value };
             return rule;
         }
 
         public static Rule<int> IsLessOrEqual(this Rule<int> rule, int max)
         {
             rule.IsValid = rule.Value.IsLessOrEqual(max);
+            rule.Message = Langs.Resource.Validation_IsLessOrEqual;
+            rule.Values = new object[] { rule.Property, max, rule.Value };
             return rule;
         }
         public static Rule<int?> IsLessOrEqual(this Rule<int?> rule, int max)
         {
             rule.IsValid = rule.Value.IsLessOrEqual(max);
+            rule.Message = Langs.Resource.Validation_IsLessOrEqual;
+            rule.Values = new object[] { rule.Property, max, rule.Value };
             return rule;
         }
 
         public static Rule<int> IsGreater(this Rule<int> rule, int min)
         {
             rule.IsValid = rule.Value.IsGreater(min);
+            rule.Message = Langs.Resource.Validation_IsGreater;
+            rule.Values = new object[] { rule.Property, min, rule.Value };
             return rule;
         }
         public static Rule<int?> IsGreater(this Rule<int?> rule, int min)
         {
             rule.IsValid = rule.Value.IsGreater(min);
+            rule.Message = Langs.Resource.Validation_IsGreater;
+            rule.Values = new object[] { rule.Property, min, rule.Value };
             return rule;
         }
 
         public static Rule<int> IsGreaterOrEqual(this Rule<int> rule, int min)
         {
             rule.IsValid = rule.Value.IsGreaterOrEqual(min);
+            rule.Message = Langs.Resource.Validation_IsGreaterOrEqual;
+            rule.Values = new object[] { rule.Property, min, rule.Value };
             return rule;
         }
         public static Rule<int?> IsGreaterOrEqual(this Rule<int?> rule, int min)
@@ -69,11 +83,15 @@ namespace AFF.DomainValidation.Validations
         public static Rule<int> Between(this Rule<int> rule, int min, int max)
         {
             rule.IsValid = rule.Value.Between(min, max);
+            rule.Message = Langs.Resource.Validation_Between;
+            rule.Values = new object[] { rule.Property, min, max, rule.Value };
             return rule;
         }
         public static Rule<int?> Between(this Rule<int?> rule, int min, int max)
         {
             rule.IsValid = rule.Value.Between(min, max);
+            rule.Message = Langs.Resource.Validation_Between;
+            rule.Values = new object[] { rule.Property, min, max, rule.Value };
             return rule;
         }
     }
