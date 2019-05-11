@@ -6,7 +6,7 @@ namespace AFF.DomainValidation.DataAnnotations
     {
         public CpfAttribute() : base()
         {
-            ErrorMessage = "{0} não está no formato correto.";
+            ErrorMessage = Langs.Resource.CpfAttribute;
         }
 
         public override bool IsValid(object value)
