@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AFF.DomainValidation.ConsoleExample.Entity;
-using AFF.DomainValidation.ConsoleExample.Validation;
+using AFF.DomainValidation.ConsoleExample.Validations;
 using AFF.DomainValidation.Entity;
 
-namespace AFF.DomainValidation.ConsoleExample.Service
+namespace AFF.DomainValidation.ConsoleExample.Services
 {
     internal class ServicePerson
     {

@@ -4,7 +4,7 @@ using AFF.DomainValidation.ConsoleExample.Entity;
 using AFF.DomainValidation.Entity;
 using AFF.DomainValidation.Validations;
 
-namespace AFF.DomainValidation.ConsoleExample.Validation
+namespace AFF.DomainValidation.ConsoleExample.Validations
 {
     class ValidationPerson : ValidationBase<Person>
     {

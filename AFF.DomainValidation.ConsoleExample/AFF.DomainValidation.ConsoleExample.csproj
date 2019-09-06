@@ -43,8 +43,8 @@
     <Compile Include="Entity\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ServicePerson.cs" />
-    <Compile Include="Validation\ValidationPerson.cs" />
+    <Compile Include="Services\ServicePerson.cs" />
+    <Compile Include="Validations\ValidationPerson.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using AFF.DomainValidation.ConsoleExample.Entity;
-using AFF.DomainValidation.ConsoleExample.Service;
+using AFF.DomainValidation.ConsoleExample.Services;
 using AFF.DomainValidation.Entity;
 
 namespace AFF.DomainValidation.ConsoleExample
