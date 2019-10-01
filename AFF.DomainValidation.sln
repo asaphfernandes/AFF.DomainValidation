@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFF.DomainValidation", "AFF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFF.DomainValidation.ConsoleExample", "AFF.DomainValidation.ConsoleExample\AFF.DomainValidation.ConsoleExample.csproj", "{8FDEFFE8-ACA8-4C6F-B194-E84F38433EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFF.DomainValidation.AspNet472Example", "AFF.DomainValidation.AspNet472Example\AFF.DomainValidation.AspNet472Example.csproj", "{3A5551B1-8042-4836-9322-82D2D21DBAF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFF.DomainValidation.AspNet472Example", "AFF.DomainValidation.AspNet472Example\AFF.DomainValidation.AspNet472Example.csproj", "{B0A353C8-0654-4117-A494-E3AA0DF497A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{8FDEFFE8-ACA8-4C6F-B194-E84F38433EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FDEFFE8-ACA8-4C6F-B194-E84F38433EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FDEFFE8-ACA8-4C6F-B194-E84F38433EF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A5551B1-8042-4836-9322-82D2D21DBAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A5551B1-8042-4836-9322-82D2D21DBAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A5551B1-8042-4836-9322-82D2D21DBAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A5551B1-8042-4836-9322-82D2D21DBAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A353C8-0654-4117-A494-E3AA0DF497A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A353C8-0654-4117-A494-E3AA0DF497A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A353C8-0654-4117-A494-E3AA0DF497A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A353C8-0654-4117-A494-E3AA0DF497A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
