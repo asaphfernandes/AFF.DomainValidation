@@ -26,29 +26,5 @@ namespace AFF.DomainValidation.AspNet472Example.Controllers
             else
                 return View(response);
         }
-
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            return View(new ResponseModel<PersonModel> { Model = Service.Get(id) });
-        }
-
-        [HttpPost]
-        public ActionResult Edit(PersonModel model)
-        {
-            return View(new ResponseModel<PersonModel> { Model = new PersonModel { } });
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            return View(new ResponseModel<PersonModel> { Model = new PersonModel { } });
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeletePost(int id)
-        {
-            return View(new ResponseModel<PersonModel> { Model = new PersonModel { } });
-        }
     }
 }
