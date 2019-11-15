@@ -2,15 +2,15 @@
 <package >
   <metadata>
     <id>AFF.DomainValidation</id>
-    <version>1.0.1</version>
+    <version>1.5.1</version>
     <title>AFF.DomainValidation</title>
     <authors>Asaph Fernandes</authors>
     <owners>Asaph Fernandes</owners>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/asaphfernandes/AFF.DomainValidation</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This is a simple library cross cutting to DDD, but you can use to any project.</description>
-    <releaseNotes>v1.0.0.</releaseNotes>
+    <releaseNotes>v1.5.1.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>Domain Validation Validate ValidationResult CrossCutting</tags>
 
