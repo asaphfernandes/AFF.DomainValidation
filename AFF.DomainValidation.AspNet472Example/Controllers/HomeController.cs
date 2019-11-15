@@ -20,13 +20,17 @@ namespace AFF.DomainValidation.AspNet472Example.Controllers
         [HttpPost]
         public ActionResult Create(PersonModel model)
         {
-            return View(Service.Add(model));
+            var response = Service.Add(model);
+            if (response.Validation.IsValid)
+                return RedirectToAction("Index");
+            else
+                return View(response);
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View(new ResponseModel<PersonModel> { Model = new PersonModel { } });
+            return View(new ResponseModel<PersonModel> { Model = Service.Get(id) });
         }
 
         [HttpPost]
