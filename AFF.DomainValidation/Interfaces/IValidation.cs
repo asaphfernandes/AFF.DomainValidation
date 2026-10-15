@@ -1,9 +1,8 @@
 using AFF.DomainValidation.Entity;
 
-namespace AFF.DomainValidation.Interfaces
+namespace AFF.DomainValidation.Interfaces;
+
+public interface IValidation
 {
-    public interface IValidation
-    {
-        ValidationResponse ValidationResult { get; }
-    }
+  ValidationResponse ValidationResult { get; }
 }

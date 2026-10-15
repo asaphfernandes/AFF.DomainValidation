@@ -1,11 +1,10 @@
-namespace AFF.DomainValidation.Entity
+namespace AFF.DomainValidation.Entity;
+
+public enum EStatus
 {
-    public enum EStatus
-    {
-        SUCCESS = 1,
-        INFO = 2,
-        ALERT = 3,
-        WARNING = 4,
-        ERROR = 5,
-    }
+  SUCCESS = 1,
+  INFO = 2,
+  ALERT = 3,
+  WARNING = 4,
+  ERROR = 5,
 }
