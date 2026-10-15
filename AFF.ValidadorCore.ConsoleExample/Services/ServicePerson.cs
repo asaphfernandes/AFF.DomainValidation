@@ -1,34 +1,33 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using AFF.ValidadorCore.ConsoleExample.Entity;
 using AFF.ValidadorCore.ConsoleExample.Validations;
 using AFF.ValidadorCore.Entity;
 
-namespace AFF.ValidadorCore.ConsoleExample.Services
+namespace AFF.ValidadorCore.ConsoleExample.Services;
+
+internal class ServicePerson
 {
-    internal class ServicePerson
-    {
-        public ServicePerson()
-        {
-            _Persons = new List<Person>();
-        }
+  public ServicePerson()
+  {
+    _Persons = [];
+  }
 
-        private List<Person> _Persons;
+  private List<Person> _Persons;
 
-        public List<Person> Get()
-        {
-            return _Persons;
-        }
+  public List<Person> Get()
+  {
+    return _Persons;
+  }
 
-        public ValidationResponse Add(Person entity)
-        {
-            var validation = new ValidationPerson(entity, _Persons);
+  public ValidationResponse Add(Person entity)
+  {
+    var validation = new ValidationPerson(entity, _Persons);
 
-            validation.Validate();
+    validation.Validate();
 
-            if (validation.ValidationResult.IsValid)
-                _Persons.Add(entity);
+    if (validation.ValidationResult.IsValid)
+      _Persons.Add(entity);
 
-            return validation.ValidationResult;
-        }
-    }
+    return validation.ValidationResult;
+  }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AFF.DomainValidation.ConsoleExample.Entity;
 using AFF.DomainValidation.Entity;
@@ -6,27 +6,27 @@ using AFF.DomainValidation.Validations;
 
 namespace AFF.DomainValidation.ConsoleExample.Validations
 {
-    class ValidationPerson : ValidationBase<Person>
+  class ValidationPerson : ValidationBase<Person>
+  {
+    private List<Person> _Persons = new List<Person>();
+
+    public ValidationPerson(Person obj, List<Person> persons) : base(obj)
     {
-        private List<Person> _Persons;
-
-        public ValidationPerson(Person obj, List<Person> persons) : base(obj)
-        {
-            _Persons = persons;
-        }
-
-        protected override void AddRules()
-        {
-            RuleFor(c => c.Age).IsGreaterOrEqual(18).Validate();
-        }
-
-        public void Validate()
-        {
-            AddStatus("Cod must is unique.", CodUnique);
-            AddStatus("Name must have 50 characters.", NameLenght);
-        }
-
-        private EStatus CodUnique(Person entity) => _Persons.Any(w => w.Cod == entity.Cod).SuccessOrError(false);
-        private EStatus NameLenght(Person entity) => entity.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
+      _Persons = persons ?? new List<Person>();
     }
+
+    protected override void AddRules()
+    {
+      RuleFor(c => c.Age).IsGreaterOrEqual(18);
+    }
+
+    public void Validate()
+    {
+      AddStatus("Cod must is unique.", CodUnique);
+      AddStatus("Name must have 50 characters.", NameLenght);
+    }
+
+    private EStatus CodUnique(Person entity) => _Persons.Any(w => w.Cod == entity.Cod).SuccessOrError(false);
+    private EStatus NameLenght(Person entity) => entity.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
+  }
 }

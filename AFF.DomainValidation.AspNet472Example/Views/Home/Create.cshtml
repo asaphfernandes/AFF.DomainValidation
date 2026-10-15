@@ -1,4 +1,4 @@
-﻿@using AFF.DomainValidation.AspNet472Example.Models
+@using AFF.DomainValidation.AspNet472Example.Models
 @model ResponseModel<PersonModel>
 
 @{
@@ -8,13 +8,14 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <h4>PersonModel</h4>
     <hr />
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <ul>
         @foreach (var item in Model.Validation.ItensError)
         {

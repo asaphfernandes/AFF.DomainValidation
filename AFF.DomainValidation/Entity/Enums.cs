@@ -1,4 +1,4 @@
-﻿namespace AFF.DomainValidation.Entity
+namespace AFF.DomainValidation.Entity
 {
     public enum EStatus
     {
