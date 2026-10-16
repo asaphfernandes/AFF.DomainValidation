@@ -6,6 +6,50 @@ namespace AFF.DomainValidation.Validations;
 
 public static class ValidationDateOnly
 {
+  public static Rule<DateOnly> Required(this Rule<DateOnly> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateOnly> MinValue(this Rule<DateOnly> rule, DateOnly min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateOnly> MaxValue(this Rule<DateOnly> rule, DateOnly max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateOnly> RangeValue(this Rule<DateOnly> rule, DateOnly min, DateOnly max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateOnly?> Required(this Rule<DateOnly?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateOnly?> MinValue(this Rule<DateOnly?> rule, DateOnly min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateOnly?> MaxValue(this Rule<DateOnly?> rule, DateOnly max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateOnly?> RangeValue(this Rule<DateOnly?> rule, DateOnly min, DateOnly max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool IsLess(this DateOnly value, DateOnly max) => value < max;
   public static bool IsLess(this DateOnly? value, DateOnly max) => value.HasValue ? value < max : true;
 

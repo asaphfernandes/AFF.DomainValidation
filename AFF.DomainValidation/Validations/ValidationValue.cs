@@ -26,41 +26,46 @@ public static class ValidationValue
 
   public static Rule<T> MinValue<T>(this Rule<T> rule, T min)
   {
-    rule.SetValidation((object)rule.Value == null || Comparer<T>.Default.Compare(rule.Value, min) >= 0, Langs.Resource.Validation_IsGreaterOrEqual, rule.Property, min, rule.Value);
+    rule.SetValidation((object)rule.Value == null || Comparer<T>.Default.Compare(rule.Value, min) >= 0, Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
     return rule;
   }
 
   public static Rule<T> MaxValue<T>(this Rule<T> rule, T max)
   {
-    rule.SetValidation((object)rule.Value == null || Comparer<T>.Default.Compare(rule.Value, max) <= 0, Langs.Resource.Validation_IsLessOrEqual, rule.Property, max, rule.Value);
+    rule.SetValidation((object)rule.Value == null || Comparer<T>.Default.Compare(rule.Value, max) <= 0, Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
     return rule;
   }
 
   public static Rule<T> RangeValue<T>(this Rule<T> rule, T min, T max)
   {
     if (Comparer<T>.Default.Compare(min, max) > 0) throw new ArgumentException("Minimum must not exceed maximum.", nameof(min));
-    rule.SetValidation((object)rule.Value == null || (Comparer<T>.Default.Compare(rule.Value, min) >= 0 && Comparer<T>.Default.Compare(rule.Value, max) <= 0), Langs.Resource.Validation_Between, rule.Property, min, max, rule.Value);
+    var message = Comparer<T>.Default.Compare(min, max) == 0 ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    var isValid = (object)rule.Value == null
+      || Comparer<T>.Default.Compare(rule.Value, min) >= 0 && Comparer<T>.Default.Compare(rule.Value, max) <= 0;
+    rule.SetValidation(isValid, message, rule.Property, min, max, rule.Value);
     return rule;
   }
 
   public static Rule<T> MinLength<T>(this Rule<T> rule, int min) where T : IEnumerable
   {
     if (min < 0) throw new ArgumentOutOfRangeException(nameof(min));
-    rule.SetValidation(rule.Value == null || rule.Value.Cast<object>().Count() >= min, Langs.Resource.Validation_IsGreaterOrEqual, rule.Property, min, rule.Value);
+    var length = GetLength(rule.Value);
+    rule.SetValidation(rule.Value == null || length >= min, Langs.Resource.Validation_IsGreaterOrEqual, rule.Property, min, length);
     return rule;
   }
 
   public static Rule<T> MaxLength<T>(this Rule<T> rule, int max) where T : IEnumerable
   {
     if (max < 0) throw new ArgumentOutOfRangeException(nameof(max));
-    rule.SetValidation(rule.Value == null || rule.Value.Cast<object>().Count() <= max, Langs.Resource.Validation_IsLessOrEqual, rule.Property, max, rule.Value);
+    var length = GetLength(rule.Value);
+    rule.SetValidation(rule.Value == null || length <= max, Langs.Resource.Validation_IsLessOrEqual, rule.Property, max, length);
     return rule;
   }
 
   public static Rule<T> RangeLength<T>(this Rule<T> rule, int min, int max) where T : IEnumerable
   {
     if (min < 0 || min > max) throw new ArgumentOutOfRangeException(nameof(min));
-    var length = rule.Value == null ? 0 : rule.Value.Cast<object>().Count();
+    var length = GetLength(rule.Value);
     rule.SetValidation(rule.Value == null || (length >= min && length <= max), Langs.Resource.Validation_Between, rule.Property, min, max, length);
     return rule;
   }
@@ -83,5 +88,13 @@ public static class ValidationValue
   {
     rule.SetValidation(new DataAnnotations.CpfAttribute().IsValid(rule.Value), Langs.Resource.CpfAttribute, rule.Property);
     return rule;
+  }
+
+  private static int GetLength(IEnumerable value)
+  {
+    if (value == null) return 0;
+    if (value is string text) return text.Length;
+    if (value is ICollection collection) return collection.Count;
+    return value.Cast<object>().Count();
   }
 }

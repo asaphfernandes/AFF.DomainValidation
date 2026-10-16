@@ -156,4 +156,34 @@
   <data name="Validation_Invalid" xml:space="preserve">
     <value>The field {0} is invalid.</value>
   </data>
+  <data name="Validation_MinLength" xml:space="preserve">
+    <value>The field {0} must contain at least {1} characters, but contains {2}.</value>
+  </data>
+  <data name="Validation_MaxLength" xml:space="preserve">
+    <value>The field {0} must contain at most {1} characters, but contains {2}.</value>
+  </data>
+  <data name="Validation_RangeLength" xml:space="preserve">
+    <value>The field {0} must contain between {1} and {2} characters, but contains {3}.</value>
+  </data>
+  <data name="Validation_ExactLength" xml:space="preserve">
+    <value>The field {0} must contain {1} characters, but contains {3}.</value>
+  </data>
+  <data name="Validation_OnlyNumber" xml:space="preserve">
+    <value>The field {0} must contain only digits.</value>
+  </data>
+  <data name="Validation_MinValue" xml:space="preserve">
+    <value>The field {0} must be at least {1}, but is {2}.</value>
+  </data>
+  <data name="Validation_MaxValue" xml:space="preserve">
+    <value>The field {0} must be at most {1}, but is {2}.</value>
+  </data>
+  <data name="Validation_RangeValue" xml:space="preserve">
+    <value>The field {0} must be between {1} and {2}, but is {3}.</value>
+  </data>
+  <data name="Validation_ExactValue" xml:space="preserve">
+    <value>The field {0} must be {1}, but is {3}.</value>
+  </data>
+  <data name="Validation_Precision" xml:space="preserve">
+    <value>The field {0} must have at most {1} decimal places, but is {2}.</value>
+  </data>
 </root>

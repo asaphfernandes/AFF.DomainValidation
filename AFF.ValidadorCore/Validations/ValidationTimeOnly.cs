@@ -6,6 +6,50 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationTimeOnly
 {
+  public static Rule<TimeOnly> Required(this Rule<TimeOnly> rule) => ValidationValue.Required(rule);
+
+  public static Rule<TimeOnly> MinValue(this Rule<TimeOnly> rule, TimeOnly min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeOnly> MaxValue(this Rule<TimeOnly> rule, TimeOnly max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeOnly> RangeValue(this Rule<TimeOnly> rule, TimeOnly min, TimeOnly max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeOnly?> Required(this Rule<TimeOnly?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<TimeOnly?> MinValue(this Rule<TimeOnly?> rule, TimeOnly min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeOnly?> MaxValue(this Rule<TimeOnly?> rule, TimeOnly max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeOnly?> RangeValue(this Rule<TimeOnly?> rule, TimeOnly min, TimeOnly max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool IsLess(this TimeOnly value, TimeOnly max) => value < max;
   public static bool IsLess(this TimeOnly? value, TimeOnly max) => value.HasValue ? value < max : true;
 

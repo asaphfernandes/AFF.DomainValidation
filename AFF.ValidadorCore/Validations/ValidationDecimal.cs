@@ -4,17 +4,66 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationDecimal
 {
+  public static Rule<decimal> Required(this Rule<decimal> rule) => ValidationValue.Required(rule);
+
+  public static Rule<decimal> MinValue(this Rule<decimal> rule, decimal min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<decimal> MaxValue(this Rule<decimal> rule, decimal max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<decimal> RangeValue(this Rule<decimal> rule, decimal min, decimal max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<decimal?> Required(this Rule<decimal?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<decimal?> MinValue(this Rule<decimal?> rule, decimal min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<decimal?> MaxValue(this Rule<decimal?> rule, decimal max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<decimal?> RangeValue(this Rule<decimal?> rule, decimal min, decimal max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool HasPrecision(this decimal value, int decimals)
   {
     if (decimals < 0 || decimals > 28) throw new System.ArgumentOutOfRangeException(nameof(decimals));
     return decimal.Round(value, decimals) == value;
   }
 
-  public static Rule<decimal> Precision(this Rule<decimal> rule, int decimals) => rule.Must(value => value.HasPrecision(decimals));
+  public static Rule<decimal> Precision(this Rule<decimal> rule, int decimals)
+  {
+    rule.SetValidation(rule.Value.HasPrecision(decimals), Langs.Resource.Validation_Precision, rule.Property, decimals, rule.Value);
+    return rule;
+  }
   public static Rule<decimal?> Precision(this Rule<decimal?> rule, int decimals)
   {
     if (decimals < 0 || decimals > 28) throw new System.ArgumentOutOfRangeException(nameof(decimals));
-    return rule.Must(value => !value.HasValue || value.Value.HasPrecision(decimals));
+    rule.SetValidation(!rule.Value.HasValue || rule.Value.Value.HasPrecision(decimals), Langs.Resource.Validation_Precision, rule.Property, decimals, rule.Value);
+    return rule;
   }
 
   public static bool IsLess(this decimal value, decimal max) => value < max;

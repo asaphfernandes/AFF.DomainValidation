@@ -5,6 +5,50 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationDateTimeOffset
 {
+  public static Rule<DateTimeOffset> Required(this Rule<DateTimeOffset> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateTimeOffset> MinValue(this Rule<DateTimeOffset> rule, DateTimeOffset min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTimeOffset> MaxValue(this Rule<DateTimeOffset> rule, DateTimeOffset max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTimeOffset> RangeValue(this Rule<DateTimeOffset> rule, DateTimeOffset min, DateTimeOffset max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTimeOffset?> Required(this Rule<DateTimeOffset?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateTimeOffset?> MinValue(this Rule<DateTimeOffset?> rule, DateTimeOffset min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTimeOffset?> MaxValue(this Rule<DateTimeOffset?> rule, DateTimeOffset max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTimeOffset?> RangeValue(this Rule<DateTimeOffset?> rule, DateTimeOffset min, DateTimeOffset max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool IsLess(this DateTimeOffset value, DateTimeOffset max) => value < max;
   public static bool IsLess(this DateTimeOffset? value, DateTimeOffset max) => value.HasValue ? value < max : true;
 

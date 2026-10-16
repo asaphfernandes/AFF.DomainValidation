@@ -20,7 +20,7 @@ public class Rule<TKey> : Rule
     return this;
   }
 
-  public Rule<TKey> WithMessage(string message)
+  public Rule<TKey> SetMessage(string message)
   {
     Message = message ?? throw new ArgumentNullException(nameof(message));
     return this;

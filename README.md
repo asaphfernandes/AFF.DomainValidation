@@ -26,7 +26,7 @@ public class PersonValidation : ValidationBase<Person>
 
   protected override void AddRules()
   {
-    RuleFor(p => p.Name).Required().MaxLength(50);
+    RuleFor(p => p.Name).Required().MinLength(2).MaxLength(50);
     RuleFor(p => p.Age).Required().MinValue(18).MaxValue(120);
     RuleFor(p => p.Cpf).IsCpf();
   }
@@ -42,6 +42,23 @@ Each condition in a chain is retained and automatically emits SUCCESS or ERROR; 
 Use `.Must(value => predicate).WithMessage("Custom message.")` for custom rules. `WithMessage` applies to the immediately preceding condition. Messages support positional arguments (`{0}` is the display name). `RuleFor` honors localized `[Display]` attributes, member conversions and nested paths such as `p => p.Address.City`; nested objects must exist when evaluated.
 
 Existing comparison extensions are preserved. Added validators cover `float`, `DateTimeOffset`, `TimeSpan`, `DateOnly`, `TimeOnly`, nullable values, booleans (`IsTrue` / `IsFalse`), enums (`IsDefined`), strings / arrays / collections (`MinLength`, `MaxLength`, `RangeLength`), email (`IsEmail`) and decimal precision (`Precision`). `DateOnly` and `TimeOnly` require a modern .NET target. `MinValue`, `MaxValue` and `RangeValue` support comparable values with inclusive bounds. Null optional values pass range checks; use `Required` for mandatory fields. `Required` accepts zero and false, rejects blank strings, empty collections, `Guid.Empty` and `DateTime.MinValue`.
+
+String length rules are defined in `ValidationString` and report the number of characters, including the current length. `RangeLength(n, n)` requires an exact length. Null strings pass length checks; use `Required` to reject missing or blank text. `OnlyNumber` requires a nonempty string containing only digits. Collection length rules use the item count. `RangeDefaultValue` supports `DateTime` (01/01/1900 through 31/12/2099) and `TimeSpan` (00:00:00 through 23:59:59), including nullable forms.
+
+Both packages expose the same rules by type:
+
+| Types | Rules |
+| --- | --- |
+| `string` | `Required`, `MinLength`, `MaxLength`, `RangeLength`, `OnlyNumber`, `IsEmail`, `IsCpf` |
+| `short`, `int`, `long`, `float`, `double`, `decimal` and nullable forms | `Required`, `MinValue`, `MaxValue`, `RangeValue` |
+| `decimal`, `decimal?` | `Precision` with the allowed decimal places and current value in the message |
+| `DateTime`, `DateTimeOffset`, `TimeSpan`, `DateOnly`, `TimeOnly` and nullable forms | `Required`, `MinValue`, `MaxValue`, `RangeValue` |
+| `Guid`, `Guid?` | `Required` rejects `Guid.Empty` |
+| `bool`, `bool?` | `Required`, `IsTrue`, `IsFalse` |
+| Enums and nullable enums | `Required`, `IsDefined` |
+| Arrays and collections | `Required`, `MinLength`, `MaxLength`, `RangeLength` |
+
+Numeric and temporal rules are available in their type-specific validation classes. The generic comparable rules remain available for other types. Bounds are inclusive; equal range bounds require that exact value. Optional nullable values pass comparisons; `Required` rejects their absence. Numeric zero and boolean false remain valid required values. The original comparison methods remain available.
 
 `ValidationResponse.Itens` preserves insertion order and normalizes null assignments to an empty collection. `Add` merges responses; protected `AddRange` merges items. Items expose `MemberNames` and `Created` (UTC). `IsValid` retains its SUCCESS-only behavior. `ToValidationResults()` converts ALERT, WARNING and ERROR into DataAnnotations results, excluding SUCCESS and INFO.
 

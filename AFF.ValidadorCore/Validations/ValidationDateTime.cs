@@ -5,6 +5,54 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationDateTime
 {
+  public static Rule<DateTime> Required(this Rule<DateTime> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateTime> MinValue(this Rule<DateTime> rule, DateTime min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTime> MaxValue(this Rule<DateTime> rule, DateTime max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTime> RangeValue(this Rule<DateTime> rule, DateTime min, DateTime max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTime?> Required(this Rule<DateTime?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<DateTime?> MinValue(this Rule<DateTime?> rule, DateTime min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTime?> MaxValue(this Rule<DateTime?> rule, DateTime max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<DateTime?> RangeValue(this Rule<DateTime?> rule, DateTime min, DateTime max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  /// <summary>Validates dates between 01/01/1900 and 31/12/2099, inclusive.</summary>
+  public static Rule<DateTime> RangeDefaultValue(this Rule<DateTime> rule) => rule.RangeValue(new DateTime(1900, 1, 1), new DateTime(2099, 12, 31));
+  public static Rule<DateTime?> RangeDefaultValue(this Rule<DateTime?> rule) => rule.RangeValue(new DateTime(1900, 1, 1), new DateTime(2099, 12, 31));
+
   public static bool HasValue(this DateTime value) => value != DateTime.MinValue;
   public static bool HasValue(this DateTime? value) => value.HasValue && value.Value.HasValue();
 

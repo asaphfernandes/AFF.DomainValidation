@@ -5,6 +5,54 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationTimeSpan
 {
+  public static Rule<TimeSpan> Required(this Rule<TimeSpan> rule) => ValidationValue.Required(rule);
+
+  public static Rule<TimeSpan> MinValue(this Rule<TimeSpan> rule, TimeSpan min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeSpan> MaxValue(this Rule<TimeSpan> rule, TimeSpan max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeSpan> RangeValue(this Rule<TimeSpan> rule, TimeSpan min, TimeSpan max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeSpan?> Required(this Rule<TimeSpan?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<TimeSpan?> MinValue(this Rule<TimeSpan?> rule, TimeSpan min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeSpan?> MaxValue(this Rule<TimeSpan?> rule, TimeSpan max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<TimeSpan?> RangeValue(this Rule<TimeSpan?> rule, TimeSpan min, TimeSpan max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  /// <summary>Validates times between 00:00:00 and 23:59:59, inclusive.</summary>
+  public static Rule<TimeSpan> RangeDefaultValue(this Rule<TimeSpan> rule) => rule.RangeValue(TimeSpan.Zero, new TimeSpan(23, 59, 59));
+  public static Rule<TimeSpan?> RangeDefaultValue(this Rule<TimeSpan?> rule) => rule.RangeValue(TimeSpan.Zero, new TimeSpan(23, 59, 59));
+
   public static bool IsLess(this TimeSpan value, TimeSpan max) => value < max;
   public static bool IsLess(this TimeSpan? value, TimeSpan max) => value.HasValue ? value < max : true;
 

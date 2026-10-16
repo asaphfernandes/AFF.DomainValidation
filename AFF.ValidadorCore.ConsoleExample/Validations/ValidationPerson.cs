@@ -12,15 +12,16 @@ class ValidationPerson(Person obj, List<Person> persons) : ValidationBase<Person
 
   protected override void AddRules()
   {
-    RuleFor(c => c.Age).IsGreaterOrEqual(18);
+    RuleFor(c => c.Name).Required();
+    RuleFor(c => c.Name).MinLength(2);
+    RuleFor(c => c.Name).MaxLength(50);
+    RuleFor(c => c.Age).MinValue(18);
   }
 
   public void Validate()
   {
     AddStatus("Cod must is unique.", CodUnique);
-    AddStatus("Name must have 50 characters.", NameLenght);
   }
 
   private EStatus CodUnique() => _persons.Any(w => w.Cod == Entity.Cod).SuccessOrError(false);
-  private EStatus NameLenght() => Entity.Name.IsLessOrEqual(50) ? EStatus.SUCCESS : EStatus.ERROR;
 }

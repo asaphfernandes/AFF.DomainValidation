@@ -70,6 +70,96 @@ namespace AFF.DomainValidation.Langs {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The field {0} must contain at least {1} characters, but contains {2}..
+        /// </summary>
+        internal static string Validation_MinLength {
+            get {
+                return ResourceManager.GetString("Validation_MinLength", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must contain at most {1} characters, but contains {2}..
+        /// </summary>
+        internal static string Validation_MaxLength {
+            get {
+                return ResourceManager.GetString("Validation_MaxLength", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must contain between {1} and {2} characters, but contains {3}..
+        /// </summary>
+        internal static string Validation_RangeLength {
+            get {
+                return ResourceManager.GetString("Validation_RangeLength", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must contain {1} characters, but contains {3}..
+        /// </summary>
+        internal static string Validation_ExactLength {
+            get {
+                return ResourceManager.GetString("Validation_ExactLength", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must contain only digits..
+        /// </summary>
+        internal static string Validation_OnlyNumber {
+            get {
+                return ResourceManager.GetString("Validation_OnlyNumber", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be at least {1}, but is {2}..
+        /// </summary>
+        internal static string Validation_MinValue {
+            get {
+                return ResourceManager.GetString("Validation_MinValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be at most {1}, but is {2}..
+        /// </summary>
+        internal static string Validation_MaxValue {
+            get {
+                return ResourceManager.GetString("Validation_MaxValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be between {1} and {2}, but is {3}..
+        /// </summary>
+        internal static string Validation_RangeValue {
+            get {
+                return ResourceManager.GetString("Validation_RangeValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be {1}, but is {3}..
+        /// </summary>
+        internal static string Validation_ExactValue {
+            get {
+                return ResourceManager.GetString("Validation_ExactValue", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must have at most {1} decimal places, but is {2}..
+        /// </summary>
+        internal static string Validation_Precision {
+            get {
+                return ResourceManager.GetString("Validation_Precision", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The field {0} is not between {1} and {2}. Value: {3}..
         /// </summary>
         internal static string Validation_Between {

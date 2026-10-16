@@ -5,6 +5,50 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationSingle
 {
+  public static Rule<float> Required(this Rule<float> rule) => ValidationValue.Required(rule);
+
+  public static Rule<float> MinValue(this Rule<float> rule, float min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<float> MaxValue(this Rule<float> rule, float max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<float> RangeValue(this Rule<float> rule, float min, float max)
+  {
+    if (float.IsNaN(min) || float.IsNaN(max) || min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<float?> Required(this Rule<float?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<float?> MinValue(this Rule<float?> rule, float min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<float?> MaxValue(this Rule<float?> rule, float max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<float?> RangeValue(this Rule<float?> rule, float min, float max)
+  {
+    if (float.IsNaN(min) || float.IsNaN(max) || min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool IsLess(this float value, float max) => value < max;
   public static bool IsLess(this float? value, float max) => value.HasValue ? value < max : true;
 

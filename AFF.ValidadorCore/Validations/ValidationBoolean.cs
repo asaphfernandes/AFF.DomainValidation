@@ -4,6 +4,9 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationBoolean
 {
+  public static Rule<bool> Required(this Rule<bool> rule) => ValidationValue.Required(rule);
+  public static Rule<bool?> Required(this Rule<bool?> rule) => ValidationValue.Required(rule);
+
   public static Rule<bool> IsTrue(this Rule<bool> rule) => rule.Must(value => value);
   public static Rule<bool?> IsTrue(this Rule<bool?> rule) => rule.Must(value => !value.HasValue || value.Value);
   public static Rule<bool> IsFalse(this Rule<bool> rule) => rule.Must(value => !value);

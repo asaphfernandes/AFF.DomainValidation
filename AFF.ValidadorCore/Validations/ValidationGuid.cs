@@ -5,6 +5,9 @@ namespace AFF.ValidadorCore.Validations;
 
 public static class ValidationGuid
 {
+  public static Rule<Guid> Required(this Rule<Guid> rule) => rule.HasValue();
+  public static Rule<Guid?> Required(this Rule<Guid?> rule) => rule.HasValue();
+
   public static bool HasValue(this Guid value) => value != Guid.Empty;
   public static bool HasValue(this Guid? value) => value.HasValue && value.Value.HasValue();
 

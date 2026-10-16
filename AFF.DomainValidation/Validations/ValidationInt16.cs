@@ -4,6 +4,50 @@ namespace AFF.DomainValidation.Validations;
 
 public static class Validationshort16
 {
+  public static Rule<short> Required(this Rule<short> rule) => ValidationValue.Required(rule);
+
+  public static Rule<short> MinValue(this Rule<short> rule, short min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<short> MaxValue(this Rule<short> rule, short max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<short> RangeValue(this Rule<short> rule, short min, short max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<short?> Required(this Rule<short?> rule) => ValidationValue.Required(rule);
+
+  public static Rule<short?> MinValue(this Rule<short?> rule, short min)
+  {
+    rule.SetValidation(rule.Value.IsGreaterOrEqual(min), Langs.Resource.Validation_MinValue, rule.Property, min, rule.Value);
+    return rule;
+  }
+
+  public static Rule<short?> MaxValue(this Rule<short?> rule, short max)
+  {
+    rule.SetValidation(rule.Value.IsLessOrEqual(max), Langs.Resource.Validation_MaxValue, rule.Property, max, rule.Value);
+    return rule;
+  }
+
+  public static Rule<short?> RangeValue(this Rule<short?> rule, short min, short max)
+  {
+    if (min > max) throw new System.ArgumentException("Minimum must not exceed maximum.", nameof(min));
+    var message = min == max ? Langs.Resource.Validation_ExactValue : Langs.Resource.Validation_RangeValue;
+    rule.SetValidation(rule.Value.Between(min, max), message, rule.Property, min, max, rule.Value);
+    return rule;
+  }
+
   public static bool IsLess(this short value, short max) => value < max;
   public static bool IsLess(this short? value, short max) => value.HasValue ? value < max : true;
 
